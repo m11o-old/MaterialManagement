@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:background="#FFFFFF">
+
+    <TextView
+        android:text="資材一覧"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/orderListNameTextView"
+        android:layout_marginLeft="25dp"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="5dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:text="商品番号"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView33"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="10dp"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_marginBottom="5dp" />
+
+        <TextView
+            android:text="019834"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/orderListNumberTextView"
+            android:layout_marginRight="80dp"
+            android:textSize="16sp"
+            android:textColor="#000000" />
+
+        <TextView
+            android:text="発注数"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView31"
+            android:layout_marginRight="5dp"
+            android:textSize="16sp"
+            android:textColor="#000000" />
+
+        <TextView
+            android:text="12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/orderListOrderTextView"
+            android:layout_marginRight="5dp"
+            android:textSize="16sp"
+            android:textColor="#000000" />
+
+        <TextView
+            android:text="コ"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView29"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+    </LinearLayout>
+</LinearLayout>

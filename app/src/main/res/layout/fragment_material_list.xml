@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.macuser.havi3.MaterialList">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/materialList"
+        android:gravity="right">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="消耗品"
+            android:id="@+id/materialListExpendable"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="10dp" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/materialListExpendableSpinner"
+            android:spinnerMode="dialog"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:textAlignment="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="場所"
+            android:id="@+id/materialLsitPlace"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="12dp" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/materialListPlaceSpinner"
+            android:spinnerMode="dialog"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="12dp"
+            android:textAlignment="viewStart"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_below="@+id/materialList"/>
+</RelativeLayout>

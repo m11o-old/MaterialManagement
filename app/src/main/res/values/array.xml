@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="expendable">
+        <item>UnSet</item>
+        <item>消耗品A</item>
+        <item>消耗品B</item>
+    </string-array>
+
+    <string-array name="place">
+        <item>UnSet</item>
+        <item>イナバ</item>
+        <item>倉庫</item>
+        <item>シンク</item>
+        <item>厨房</item>
+        <item>カウンター</item>
+        <item>クルールーム</item>
+    </string-array>
+</resources>

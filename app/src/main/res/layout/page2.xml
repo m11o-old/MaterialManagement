@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#00000000">
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:background="#94D98C"
+        android:textColor="#ffffff"
+        android:id="@+id/MaterialListPreserveButton"
+        android:text="詳細\n表示"
+        android:textAlignment="center"/>
+
+    <Button
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:background="#4DA437"
+        android:textColor="#ffffff"
+        android:id="@+id/MaterialListStockPreserveButton"
+        android:text="在庫\n入力"
+        android:textAlignment="center"/>
+
+</LinearLayout>

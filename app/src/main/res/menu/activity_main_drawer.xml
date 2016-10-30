@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/materialList"
+            android:title="@string/materialList"/>
+        <item
+            android:id="@+id/budget"
+            android:title="@string/budget"/>
+        <item
+            android:id="@+id/orderList"
+            android:title="@string/orderList"/>
+        <item
+            android:id="@+id/order"
+            android:title="@string/order"/>
+        <item android:title="新しい資材の登録"
+            android:id="@+id/newMaterial" />
+    </group>
+
+</menu>
