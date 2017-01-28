@@ -5,8 +5,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.view.PagerAdapter;
@@ -82,6 +84,8 @@ public class MaterialList extends Fragment {
                 expendable = spinnerExpendable.getSelectedItem().toString();
                 place = spinnerPlace.getSelectedItem().toString();
 
+                Material.updateEditStockAllZero(getActivity().getApplicationContext());
+
                 myAdapter = new myAdapter(
                         getActivity().getApplicationContext(),
                         R.layout.row,
@@ -115,6 +119,8 @@ public class MaterialList extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 expendable = spinnerExpendable.getSelectedItem().toString();
                 place = spinnerPlace.getSelectedItem().toString();
+
+                Material.updateEditStockAllZero(getActivity().getApplicationContext());
 
                 myAdapter = new myAdapter(
                         getActivity().getApplicationContext(),
@@ -171,7 +177,8 @@ public class MaterialList extends Fragment {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        @NonNull
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
             list = (List<String>) getItem(position);
             View view;
 
@@ -205,25 +212,29 @@ public class MaterialList extends Fragment {
         }
 
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
+        public Object instantiateItem(final ViewGroup container, int position) {
             LinearLayout layout = null;
+            final Material material = new Material(number, name);
+
             if (position == 0) {
                 layout = (LinearLayout) inflater.inflate(R.layout.page1, null);
                 TextView txt1 = (TextView) layout.findViewById(R.id.text1);
                 txt1.setText(name);
                 TextView txt2 = (TextView) layout.findViewById(R.id.text2);
                 txt2.setText(number);
+                if (material.getEditStock(getActivity().getApplicationContext())) {
+                    layout.setBackgroundColor(Color.rgb(165, 165, 165));
+                }
+
             } else {
                 layout = (LinearLayout) inflater.inflate(R.layout.page2, null);
 
-                Button btnStock = (Button) layout.findViewById(R.id.MaterialListStockPreserveButton);
+                final Button btnStock = (Button) layout.findViewById(R.id.MaterialListStockPreserveButton);
                 btnStock.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         LayoutInflater layoutInflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         final View layout = layoutInflater.inflate(R.layout.dialog_list_view, null);
-
-                        final Material material = new Material(number, name);
 
                         final EditText Case = (EditText) layout.findViewById(R.id.editTextDialogCase);
                         final EditText Bag = (EditText) layout.findViewById(R.id.editTextDialogBag);
@@ -258,6 +269,9 @@ public class MaterialList extends Fragment {
                                         }
 
                                         material.setNumber(getActivity().getApplicationContext(), Integer.parseInt(caseNumber), Integer.parseInt(bagNumber), Double.parseDouble(substanceNumber));
+                                        material.updateEditStock_1(getActivity().getApplicationContext());
+
+                                        instantiateItem(container, 0);
                                     }
                                 })
                                 .setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
