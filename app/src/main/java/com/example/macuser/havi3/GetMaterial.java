@@ -3,6 +3,7 @@ package com.example.macuser.havi3;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.graphics.CornerPathEffect;
 import android.os.CountDownTimer;
 
@@ -232,6 +233,33 @@ public class GetMaterial {
         sb.append(";");
 
         return sb.toString();
+    }
+
+    public static List<String> getAllNumber(Context context) {
+        final DBOpenHelper myHelper = new DBOpenHelper(context);
+        try {
+            myHelper.createEmptyDatabase();
+        } catch (IOException e) {
+            throw new Error ("Unable to Create Database");
+        }
+
+        List<String> list = new ArrayList<>();
+
+        SQLiteDatabase db = myHelper.getReadableDatabase();
+        String sql = "SELECT \"number\" FROM \"Name\";";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        try {
+            while (cursor.moveToNext()) {
+                list.add(cursor.getString(cursor.getColumnIndex("number")));
+            }
+        } catch (SQLiteException e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+
+        return list;
     }
 
 

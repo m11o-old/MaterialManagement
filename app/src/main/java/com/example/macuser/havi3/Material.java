@@ -1032,4 +1032,98 @@ public class Material {
         return sb.toString();
     }
 
+    public void updateEditStock_1(Context context) {
+        final DBOpenHelper myHelper = new DBOpenHelper(context);
+        try {
+            myHelper.createEmptyDatabase();
+        } catch (IOException e) {
+            throw new Error("Unable to Create Database");
+        }
+
+        SQLiteDatabase db = myHelper.getWritableDatabase();
+
+        try {
+            ContentValues cv = new ContentValues();
+            cv.put("judgement", 1);
+
+            try {
+                db.beginTransaction();
+                db.update("EditStock", cv, "number = ?", new String[] {this.materialNumber});
+                db.setTransactionSuccessful();
+            } catch (SQLiteException e) {
+                e.printStackTrace();
+            } finally {
+                db.endTransaction();
+            }
+        } catch (SQLiteException e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+            myHelper.close();
+        }
+    }
+
+    public static void updateEditStockAllZero(Context context) {
+        final DBOpenHelper myHelper = new DBOpenHelper(context);
+        try {
+            myHelper.createEmptyDatabase();
+        } catch (IOException e) {
+            throw new Error("Unable to Create Database");
+        }
+
+        SQLiteDatabase db = myHelper.getWritableDatabase();
+
+        try {
+            ContentValues cv = new ContentValues();
+            cv.put("judgement", 0);
+
+            List<String> numberList = GetMaterial.getAllNumber(context);
+            for (int i = 0; i < numberList.size(); i++) {
+                try {
+                    db.beginTransaction();
+                    db.update("EditStock", cv, "number = ?", new String[] {numberList.get(i)});
+                } catch (SQLiteException e) {
+                    e.printStackTrace();
+                } finally {
+                    db.endTransaction();
+                }
+            }
+        } catch (SQLiteException e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+            myHelper.close();
+        }
+    }
+
+    public boolean getEditStock(Context context) {
+        final DBOpenHelper myHelper = new DBOpenHelper(context);
+        try {
+            myHelper.createEmptyDatabase();
+        } catch (IOException e) {
+            throw new Error("Unable to Create Database");
+        }
+
+        SQLiteDatabase db = myHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(getMaterial.makeSelectSQL(new String[] {"judgement"}, "EditStock"), null);
+
+        int judge_integer = 0;
+        boolean judge = false;
+
+        try {
+            while (cursor.moveToNext()) {
+                judge_integer = cursor.getInt(cursor.getColumnIndex("judgement"));
+                if (judge_integer == 1) {
+                    judge = true;
+                }
+            }
+        } catch (SQLiteException e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+
+        return judge;
+    }
+
 }
