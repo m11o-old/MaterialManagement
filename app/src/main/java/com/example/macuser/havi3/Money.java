@@ -62,7 +62,7 @@ public class Money {
             List<Integer> order = orderList.get(key);
             int price = order.get(0);
             int orderNumber = 0;
-            for (int i = 1; i < 5; i++) {
+            for (int i = 1; i < 6; i++) {
                 orderNumber += order.get(i);
             }
             remainMoney += price * orderNumber;
@@ -110,19 +110,20 @@ public class Money {
 
         SQLiteDatabase db = myHelper.getReadableDatabase();
 
-        String sql = "SELECT Ordering.first, Ordering.second, Ordering.third, Ordering.forth, Name.price, Name.name FROM Ordering INNER JOIN Name ON Ordering.number = Name.number WHERE Ordering.month = " + String.valueOf(month) + " AND (Ordering.first > 0 OR Ordering.second > 0 OR Ordering.third > 0 OR Ordering.forth > 0);";
+        String sql = "SELECT Ordering.first, Ordering.second, Ordering.third, Ordering.forth, Ordering.other, Name.price, Name.name FROM Ordering INNER JOIN Name ON Ordering.number = Name.number WHERE Ordering.month = " + String.valueOf(month) + " AND (Ordering.first > 0 OR Ordering.second > 0 OR Ordering.third > 0 OR Ordering.forth > 0 OR Ordering.other > 0);";
         Cursor cursor = db.rawQuery(sql, null);
 
         Map<String, List<Integer>> orderList = new HashMap<>();
 
         try {
             while(cursor.moveToNext()) {
-                List<Integer> order = new ArrayList<>(5);
+                List<Integer> order = new ArrayList<>(6);
                 order.add(cursor.getInt(cursor.getColumnIndex("price")));
                 order.add(cursor.getInt(cursor.getColumnIndex("first")));
                 order.add(cursor.getInt(cursor.getColumnIndex("second")));
                 order.add(cursor.getInt(cursor.getColumnIndex("third")));
                 order.add(cursor.getInt(cursor.getColumnIndex("forth")));
+                order.add(cursor.getInt(cursor.getColumnIndex("other")));
 
                 orderList.put(cursor.getString(cursor.getColumnIndex("name")), order);
             }

@@ -114,6 +114,7 @@ public class MaterialListContainer extends AppCompatActivity {
         String numberExtra;
         final String nameExtra;
         String priceExtra;
+        final String numberExtra_2;
 
         switch(position) {
 
@@ -144,11 +145,10 @@ public class MaterialListContainer extends AppCompatActivity {
                 break;
             //新規で注文したときに新しく資材として、登録する場合
             case 1:
-                nameExtra = i.getStringExtra("name");
                 priceExtra = i.getStringExtra("price");
+                numberExtra_2 = i.getStringExtra("number");
                 btnEnd.setText("保存");
 
-                Name.setText(nameExtra);
                 price.setText(priceExtra);
 
                 btnEnd.setOnClickListener(new View.OnClickListener() {
@@ -158,6 +158,7 @@ public class MaterialListContainer extends AppCompatActivity {
                             btnEnd.setText("終了");
                             if (judgementNull()) {
                                 Material.recordMaterial(getApplicationContext(), getTextInEditText());
+                                Material.updatePriceByName(getApplicationContext(), Name.getText().toString(), Integer.valueOf(numberExtra_2));
                                 Toast.makeText(getApplicationContext(), "登録しました。", Toast.LENGTH_SHORT).show();
                                 setFalseFocusable();
                             } else {

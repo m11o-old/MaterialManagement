@@ -8,10 +8,12 @@ import android.app.DownloadManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.hardware.camera2.CameraDevice;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -904,9 +906,11 @@ public class Material {
         for (String name : orderList.keySet()) {
             List<String> list = new ArrayList<>(3);
 
+            List<String> orderSum = orderSum(orderList.get(name));
+
             list.add(name);
-            list.add(orderSum(orderList.get(name)).get(0));
-            list.add(orderSum(orderList.get(name)).get(1));
+            list.add(orderSum.get(0));
+            list.add(orderSum.get(1));
 
             allList.add(list);
         }
@@ -914,10 +918,9 @@ public class Material {
     }
 
     private static List<String> orderSum(List<Integer> orderList) {
-        List<Integer> list = orderList;
         List<String> preserveList = new ArrayList<>(2);
-        int price = list.get(0);
-        int orderNumber = orderList.get(1) + orderList.get(2) + orderList.get(3) + orderList.get(4);
+        int price = orderList.get(0);
+        int orderNumber = orderList.get(1) + orderList.get(2) + orderList.get(3) + orderList.get(4) + orderList.get(5);
         int remainMoney = price * orderNumber;
 
         preserveList.add(String.valueOf(orderNumber));
@@ -1082,6 +1085,7 @@ public class Material {
                 try {
                     db.beginTransaction();
                     db.update("EditStock", cv, "number = ?", new String[] {numberList.get(i)});
+                    db.setTransactionSuccessful();
                 } catch (SQLiteException e) {
                     e.printStackTrace();
                 } finally {
@@ -1124,6 +1128,127 @@ public class Material {
         }
 
         return judge;
+    }
+
+    public static int getPrice(Context context, String name) {
+        final DBOpenHelper myHelper = new DBOpenHelper(context);
+        try {
+            myHelper.createEmptyDatabase();
+        } catch (IOException e) {
+            throw new Error("Unable to Create Database");
+        }
+
+        SQLiteDatabase db = myHelper.getReadableDatabase();
+        String sql = "SELECT \"price\" FROM \"Name\" WHERE \"name\" = \"" + name + "\";";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        int price = 0;
+
+        try {
+            while(cursor.moveToNext()) {
+                price = cursor.getInt(cursor.getColumnIndex("price"));
+            }
+        } catch (SQLiteException e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+
+        return price;
+    }
+
+    public static void updatePriceByName(Context context, String name, int number) {
+        final DBOpenHelper myHelper = new DBOpenHelper(context);
+        try {
+            myHelper.createEmptyDatabase();
+        } catch (IOException e) {
+            throw new Error("Unable to Create Database");
+        }
+
+        SQLiteDatabase db = myHelper.getWritableDatabase();
+
+        String numberByName = getNumberByName(context, name);
+
+        Calendar calendar = Calendar.getInstance();
+        int month = calendar.get(Calendar.MONTH) + 1;
+
+        int other = getPriceOther(context, numberByName);
+        other = other + number;
+
+        try {
+            ContentValues cv = new ContentValues();
+            cv.put("other", other);
+            cv.put("month", month);
+
+            try {
+                db.beginTransaction();
+                db.update("Ordering", cv, "number = ?", new String[] {numberByName});
+                db.setTransactionSuccessful();
+            } catch (SQLiteException e) {
+                e.printStackTrace();
+            } finally {
+                db.endTransaction();
+            }
+        } catch (SQLiteException e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+            myHelper.close();
+        }
+    }
+
+    private static int getPriceOther(Context context, String number) {
+        final DBOpenHelper myHelper = new DBOpenHelper(context);
+        try {
+            myHelper.createEmptyDatabase();
+        } catch (IOException e) {
+            throw new Error("Unable to Create Database");
+        }
+
+        SQLiteDatabase db = myHelper.getReadableDatabase();
+        String sql = "SELECT \"other\" FROM \"Ordering\" WHERE \"number\" = \"" + number + "\";";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        int other = 0;
+
+        try {
+            while (cursor.moveToNext()) {
+                other = cursor.getInt(cursor.getColumnIndex("other"));
+            }
+        } catch (SQLiteException e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+
+        return other;
+    }
+
+    public static String getNumberByName(Context context, String name) {
+        final DBOpenHelper myHelper = new DBOpenHelper(context);
+        try {
+            myHelper.createEmptyDatabase();
+        } catch (IOException e) {
+            throw new Error("Unable to Create Database");
+        }
+
+        SQLiteDatabase db = myHelper.getReadableDatabase();
+        String sql = "SELECT \"number\" FROM \"Name\" WHERE \"name\" = \"" + name + "\";";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        String number = null;
+
+        try {
+            while (cursor.moveToNext()) {
+                number = cursor.getString(cursor.getColumnIndex("number"));
+            }
+        } catch (SQLiteException e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+
+        return number;
     }
 
 }

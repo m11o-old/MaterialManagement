@@ -125,10 +125,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onOrderFragmentEvent(String name, String price) {
+    public void onOrderFragmentEvent(String price, String number) {
         Intent intent = new Intent(MainActivity.this, MaterialListContainer.class);
-        intent.putExtra("name", name);
         intent.putExtra("price", price);
+        intent.putExtra("number", number);
         intent.putExtra("position", 1);
         startActivity(intent);
     }

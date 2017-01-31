@@ -148,7 +148,7 @@ public class MaterialList extends Fragment {
         }
 
         @Override
-        public View getDropDownView(int position, View convertView,ViewGroup parent) {
+        public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
             View view = super.getDropDownView(position, convertView, parent);
             ((TextView) view).setGravity(Gravity.CENTER);
             return view;

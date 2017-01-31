@@ -7,14 +7,10 @@
     android:gravity="center">
 
 
-    <EditText
-        android:layout_width="300dp"
+    <Spinner
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/orderEditText1"
-        android:hint="資材名"
-        android:textAlignment="center" />
+        android:id="@+id/orderSpinner" />
 
     <EditText
         android:layout_width="300dp"

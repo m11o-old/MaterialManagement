@@ -17,7 +17,7 @@ import java.io.OutputStream;
  */
 public class DBOpenHelper extends SQLiteOpenHelper {
     private static final String DB_FILE_NAME = "HAVI.db";
-    private static final String DB_NAME = "HAVI.db.db.db.db.db.db.db.db.db.db.db.db.db.db.db.db.db.db.db.db.db.db";
+    private static final String DB_NAME = "HAVI.db.db.db.db.db.db.db.db.db.db.db.db.db.db.db.db.db.db.db.db.db.db.db.db.db.db.db";
     private static final int DB_VERSION = 1;
 
     private SQLiteDatabase mDatabase;

@@ -38,7 +38,7 @@ public class Budget extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_budget, container, false);
 
-        money = new Money(getActivity().getApplicationContext(), false);
+        money = new Money(getActivity().getApplicationContext(), true);
 
         ListView listView = (ListView) view.findViewById(R.id.BudgetListView);
         myBudgetAdapter adapter = new myBudgetAdapter(getActivity().getApplicationContext(), R.layout.budget_list_view_content, Material.getOrderList(getActivity().getApplicationContext()));
